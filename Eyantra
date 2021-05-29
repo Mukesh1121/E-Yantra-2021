@@ -1,20 +1,23 @@
 #Code for microcontroller
 #This code takes feedback from the sensors installed in the liquification chamber.
 import time
-x=0
-while x >0:                                      #For an infimite loop
-
-    t=150                                       #Time required to fill KOH in seconds
-    u=30                                        #Time required to fill KOH in seconds
-    koh_pump="LOW"                              #Relay for pump to flow alkaline solution in chember
-    h2o_pump="LOW"                              #Relay for pump to flow alkaline solution in chember
-    flush_pump="LOW"                            #Relay for pump to flow water in chember
-    start_button="LOW"                          #A start button to start operation
-    temp=0                                      #Reading from temperature sensor as a feedback of real time temperature in chamber
-    pressure=0                                  #Reading from pressure sensor as a feedback of real time pressure in chamber
-    heater="LOW"                                #Relay for heature to increase temperature upto the required point
-    compressor_valve="LOW"                      #Relay for compressure valve to increase pressure upto the required point
+t=150                                       #Time required to fill KOH in seconds
+u=30                                        #Time required to fill KOH in seconds
+v=200                                       #Time required to empty the fluid in seconds
+koh_pump="LOW"                              #Relay for pump to flow alkaline solution in chember
+h2o_pump="LOW"                              #Relay for pump to flow alkaline solution in chember
+flush_pump="LOW"                            #Relay for pump to flow water in chember
+start_button="LOW"                          #A start button to start operation
+stop_button="LOW"                           #A stop button to stop operation
+temp=0                                      #Reading from temperature sensor as a feedback of real time temperature in chamber
+pressure=0                                  #Reading from pressure sensor as a feedback of real time pressure in chamber
+heater="LOW"                                #Relay for heature to increase temperature upto the required point
+compressor_valve="LOW"                      #Relay for compressure valve to increase pressure upto the required point
  #After placing body in the chamber press start button to start the process
+x=0
+while x >0:                                  #For an infimite loop
+
+
     if start_button =="HIGH":
         x=time.ctime=0
         koh_pump=1                              #To start pump
@@ -23,6 +26,8 @@ while x >0:                                      #For an infimite loop
         h2o_pump=1                              #To start pump
         time.sleep(u)                           #Time u seconds required to fill the water container upto certain volume
         h2o_pump=0                              #To stop pump
+        
+
     else:
         pass
     if temp <250:                               #Check temperature comntinuously
@@ -33,9 +38,8 @@ while x >0:                                      #For an infimite loop
         compressor_valve="HIGH"                 #To start heature if temperature is not upto required
     else:
         compressor_valve="LOW"                  #To stop heater
-    if time.ctime()==x+2:                            #Delay for 2 hours after the process has been started
+    if stop_button =="HIGH":
         flush_pump="HIGH"                       #To start flushing of fluid
-    else:
+        time.slee(v)                            #Time u seconds required to fill the water container upto certain volume
         flush_pump="LOW"                        #To stop flushing of fluid
-
     time.sleep(1)
